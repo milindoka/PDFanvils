@@ -2,13 +2,17 @@ package pdfan;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
+
+import com.itextpdf.text.DocumentException;
 
 public class Controller {
 
     private View view;
     private ActionListener GenericActionListener;
+    private monthlyReportpdf MR=new monthlyReportpdf();
     
     public Controller()
     {
@@ -33,7 +37,19 @@ public class Controller {
     
     private void ActionTerminal(String ButtonString)
     {
-    	if(ButtonString.contains("00")) { System.out.println("00"); return; }
+    	if(ButtonString.contains("00")) { 
+    		try {
+    			MR.AttendanceReportPdf();
+    		} catch (DocumentException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        
+    		
+    		System.out.println("00"); return; }
     	if(ButtonString.contains("01")) {  return; }
     	if(ButtonString.contains("02")) {  return; }
     	if(ButtonString.contains("03")) {  return; }
