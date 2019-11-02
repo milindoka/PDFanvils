@@ -9,6 +9,7 @@ import java.util.Random;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -22,6 +23,11 @@ public class monthlyReportpdf {
 	//fylename=path+"/"+ReportName+"-Science.txt";
 	
 	int strength=35,requiredtables=3;
+	
+	
+	 Font normal = new Font(Font.FontFamily.TIMES_ROMAN, 10,
+             Font.NORMAL);
+
 	
 	public String getJarPath()
     {
@@ -62,8 +68,7 @@ public class monthlyReportpdf {
 	    	document.open();
 	    	
 	     //    com.itextpdf.text.Font NORMAL = new com.itextpdf.text.Font(FontFamily.TIMES_ROMAN, 12);
-	        AddHeader(document);
-//	    	FillMarksArray();
+	        AddHeader(document);	FillMarksArray();
 	        AttendanceGrid(document);
          
 //	        AddFooter(document);
@@ -115,6 +120,74 @@ public class monthlyReportpdf {
 	  
 	  void AttendanceGrid(Document document) throws DocumentException, IOException
 	  { 
+			
+		   float col[]={4,8,2,2,2,2,2,2,2,2,2,2,
+				            2,2,2,2,2,2,2,2,2,2,
+				            2,2,2,2,2,2,2,2,2,2,
+				            2};
+		  	
+		  	//////////   TITLE ROW  ///////////////////////
+		  	
+		  	PdfPTable table2 = new PdfPTable(col);
+		  	 table2.setWidthPercentage(95);
+		   PdfPCell cell = new PdfPCell(new Phrase("Sr No",normal));
+		    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		    cell.setPaddingBottom(5f);
+		    table2.addCell(cell);  	
+		  	
+		    cell = new PdfPCell(new Phrase("Roll No",normal));
+		    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		    //cell.setBorder(PdfPCell.NO_BORDER);
+		    table2.addCell(cell);
+		   
+		    String dateno;
+		    for(int j=0;j<31;j++)
+		    {
+				    dateno=String.format("%d",j+1);
+				    cell = new PdfPCell(new Phrase(dateno,normal));
+				    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+				    cell.setPaddingBottom(5f);
+				    table2.addCell(cell);
+		    }
+		    	
+            ////////////////// END OF TITLE ROW		    
+		    
+		    ////////////// REMAING TABLE ROWS
+		    
+		    String srno;	
+		  for (int i=0;i<strength;i++)	
+		  {
+	    	srno=String.format("%d",i+1);
+		    cell = new PdfPCell(new Phrase(srno,normal));
+		    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		    cell.setPaddingBottom(5f);
+		    table2.addCell(cell);
+		    
+		    cell = new PdfPCell(new Phrase(roll.get(i),normal));
+		    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		    //cell.setBorder(PdfPCell.NO_BORDER);
+		    table2.addCell(cell);
+		  	
+		     for(int j=0;j<31;j++)
+		          {
+				    
+				    cell = new PdfPCell(new Phrase("P",normal));
+				    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+				    cell.setPaddingBottom(5f);
+				    table2.addCell(cell);
+		          }
+		  }
+
+	
+		  	
+		    document.add(table2);
+				  
+		  
+		  
+		  
+		  
+		  /*
+		  
 		  PdfPTable table1 = new PdfPTable(35);
 	      table1.setWidthPercentage(100);
   		  PdfPCell cellfortable1 = new PdfPCell();
@@ -124,9 +197,10 @@ public class monthlyReportpdf {
           for(int aw = 0; aw < 35*31; aw++){
               table1.addCell("P");
           }
+          
  
      	  document.add(table1);	
-
+*/
 	  }
 	  
 
