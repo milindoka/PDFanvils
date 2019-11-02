@@ -124,7 +124,7 @@ public class monthlyReportpdf {
 		   float col[]={4,8,2,2,2,2,2,2,2,2,2,2,
 				            2,2,2,2,2,2,2,2,2,2,
 				            2,2,2,2,2,2,2,2,2,2,
-				            2};
+				            2,4,4};
 		  	
 		  	//////////   TITLE ROW  ///////////////////////
 		  	
@@ -149,6 +149,16 @@ public class monthlyReportpdf {
 				    cell.setPaddingBottom(5f);
 				    table2.addCell(cell);
 		    }
+		    
+		    cell = new PdfPCell(new Phrase("Total",normal));
+		    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		    //cell.setBorder(PdfPCell.NO_BORDER);
+		    table2.addCell(cell);
+		    
+		    cell = new PdfPCell(new Phrase(" % ",normal));
+		    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		    //cell.setBorder(PdfPCell.NO_BORDER);
+		    table2.addCell(cell);
 		    	
             ////////////////// END OF TITLE ROW		    
 		    
@@ -170,12 +180,22 @@ public class monthlyReportpdf {
 		  	
 		     for(int j=0;j<31;j++)
 		          {
-				    
 				    cell = new PdfPCell(new Phrase("P",normal));
 				    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 				    cell.setPaddingBottom(5f);
 				    table2.addCell(cell);
 		          }
+		     
+		       cell = new PdfPCell(new Phrase(" ",normal));
+			    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+			    //cell.setBorder(PdfPCell.NO_BORDER);
+			    table2.addCell(cell);
+			    
+			    cell = new PdfPCell(new Phrase(" ",normal));
+			    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+			    //cell.setBorder(PdfPCell.NO_BORDER);
+			    table2.addCell(cell);
+		     
 		  }
 
 	
