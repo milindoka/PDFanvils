@@ -1,0 +1,9 @@
+pickup date serially
+if no attendance found for particular date create dummy space apchain string
+otherwise pickup apchain string from attendanceLines array 
+ensure string apchain size = roll.size
+add each A or P char in each element of roll array (blanks will be added for missing attendnace)
+print monthly report as sr + roll.get(i) +31 cols  i th char of apchain in i th column 
+
+
+
