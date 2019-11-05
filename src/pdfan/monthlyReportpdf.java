@@ -18,9 +18,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class monthlyReportpdf {
 	
+
 	ArrayList<String> roll=new ArrayList<String>();//creating new generic arraylist  
-	ArrayList<String> attendance=new ArrayList<String>();//creating new generic arraylist
-	//fylename=path+"/"+ReportName+"-Science.txt";
+	ArrayList<String> attendanceLines=new ArrayList<String>();//creating new generic arraylist
+	ArrayList<String> APchain=new ArrayList<String>();//creating new generic arraylist
 	
 	int strength=35,requiredtables=3;
 	
@@ -36,28 +37,44 @@ public class monthlyReportpdf {
         String path=dir.toString();
      	return  path;
     }
-
-	void FillMarksArray()
-	{   roll.removeAll(roll);
-	    attendance.removeAll(attendance);
-        int x=0;
-        String str;
-		Random ran = new Random();
-		for(int i=0;i<strength;i++)
-		  {
-			x = ran.nextInt(101);
-			str=String.format("%d", 5001+i);
-			roll.add(str); 
-			str=String.format("%02d", x);
-			attendance.add(str);
-			
-		  }
 	
+
+	void FillRollArray()
+	{   roll.removeAll(roll);
+	   
+	String temp[],rolltemp[];
+	
+	
+	
+	//assert 4 parts in first split 
+	temp=attendanceLines.get(0).split("#");
+	rolltemp=temp[2].split(",");
+	
+	  for (int x=0;x<rolltemp.length;x++)
+	    { roll.add(rolltemp[x]); 	    	
+	    }
+	}
+
+	
+	void LoadAttendanceLines(String division, String month)
+	{  
+	    attendanceLines.removeAll(attendanceLines);
+	    attendanceLines.add("02/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
+	    attendanceLines.add("03/11/19 - Sun - 20:23#IX-A#5,25,197,331,565,1012#PPAAAP");
+	    attendanceLines.add("08/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
+	    attendanceLines.add("17/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
+	    attendanceLines.add("22/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
+	    attendanceLines.add("28/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
+	    attendanceLines.add("31/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
 	}
 	
 	
+	
+	
 	 void AttendanceReportPdf() throws DocumentException, IOException
-	    {   if(strength>200) return;
+	    {  LoadAttendanceLines(" ", " ");
+		 
+		   if(strength>200) return;
 		 	requiredtables=strength/35;
 	        if(strength%35!=0) requiredtables++;
 
@@ -68,7 +85,8 @@ public class monthlyReportpdf {
 	    	document.open();
 	    	
 	     //    com.itextpdf.text.Font NORMAL = new com.itextpdf.text.Font(FontFamily.TIMES_ROMAN, 12);
-	        AddHeader(document);	FillMarksArray();
+	        AddHeader(document);
+	        FillRollArray();
 	        AttendanceGrid(document);
          
 //	        AddFooter(document);
@@ -165,7 +183,7 @@ public class monthlyReportpdf {
 		    ////////////// REMAING TABLE ROWS
 		    
 		    String srno;	
-		  for (int i=0;i<strength;i++)	
+		  for (int i=0;i<roll.size();i++)	
 		  {
 	    	srno=String.format("%d",i+1);
 		    cell = new PdfPCell(new Phrase(srno,normal));
@@ -245,7 +263,7 @@ public class monthlyReportpdf {
 	      cell.setPaddingBottom(3f);
 	      cell.setPaddingTop(1f);
 		  tbl.addCell(cell);
-		  cell = new PdfPCell(new Phrase(attendance.get(i+index*35)));
+		  cell = new PdfPCell(new Phrase(attendanceLines.get(i+index*35)));
 		  cell.setPaddingBottom(3f);	
 		  cell.setPaddingTop(1f);
 		  cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
