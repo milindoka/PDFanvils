@@ -69,30 +69,49 @@ public class monthlyReportpdf {
 	
 	void Check_ThirtyOneDays_And_Fill_APChain()
 	{ boolean datefound=false;
-	  
+	  String currentline="";
+	  String lastblock="";
 	  for(int i=1;i<32;i++)
 		{ 
 		  String TwoDigitMonthDay=String.format("%02d",i);
+		  
 		  datefound=false;
 		  for(int j=0;j<attendanceLines.size();j++)
-		  {
+		  {   currentline=attendanceLines.get(j);
 			  String str=attendanceLines.get(j).substring(0, 2);
 			  if(str.equalsIgnoreCase(TwoDigitMonthDay))
 			  {datefound=true; break;}
 		  }
+		  
+		  if(datefound)
+		  { lastblock="";
+			String temp[];
+			//assert 4 parts in first split 
+			temp=currentline.split("#");
+			lastblock+=temp[3];
+				
+			}  
+		  
+		  
+		  
 		  for(int k=0;k<roll.size();k++)
 		  {
-			String temp=APchain.get(k);
+			  
+			String temp2=APchain.get(k);
+			
 			if(datefound) 
-				APchain.set(k,temp+"P");
+				APchain.set(k,temp2+lastblock.charAt(k));
 			    else
-			    APchain.set(k,temp+" ");
+			    APchain.set(k,temp2+" ");
 			   
 		   }
 		}
 	  for(int l=0;l<APchain.size();l++)
 		  System.out.println(APchain.get(l));
 	}
+	
+	
+	
 	
 	
 	 void AttendanceReportPdf() throws DocumentException, IOException
