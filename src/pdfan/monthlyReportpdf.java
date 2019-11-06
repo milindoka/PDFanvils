@@ -222,8 +222,8 @@ public class monthlyReportpdf {
 		    table2.addCell(cell);
 		  	
 		     for(int j=0;j<31;j++)
-		          {
-				    cell = new PdfPCell(new Phrase("P",normal));
+		          { String APmark=""+APchain.get(i).charAt(j);
+				    cell = new PdfPCell(new Phrase(APmark,normal));
 				    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 				    cell.setPaddingBottom(5f);
 				    table2.addCell(cell);
