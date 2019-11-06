@@ -74,6 +74,7 @@ public class monthlyReportpdf {
 	{ boolean datefound=false;
 	  String currentline="";
 	  String lastblock="";
+	  totalDays=0;
 	  for(int i=1;i<32;i++)
 		{ 
 		  String TwoDigitMonthDay=String.format("%02d",i);
@@ -87,7 +88,8 @@ public class monthlyReportpdf {
 		  }
 		  
 		  if(datefound)
-		  { lastblock="";
+		  { totalDays++;
+			lastblock="";
 			String temp[];
 			//assert 4 parts in first split 
 			temp=currentline.split("#");
@@ -255,13 +257,18 @@ public class monthlyReportpdf {
 				    table2.addCell(cell);
 		          }
 		     
-		       cell = new PdfPCell(new Phrase(" ",normal));
+		       cell = new PdfPCell(new Phrase(String.format("%02d",PresentCount[i]),normal));
 			    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 			    //cell.setBorder(PdfPCell.NO_BORDER);
 			    table2.addCell(cell);
 			    
-			    cell = new PdfPCell(new Phrase(" ",normal));
-			    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+			    
+			    float percent = PresentCount[i]*100/totalDays;
+                String percentage = String.format(" %3.2f",percent);
+			    
+			    
+			    cell = new PdfPCell(new Phrase(percentage,normal));
+			 //   cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 			    //cell.setBorder(PdfPCell.NO_BORDER);
 			    table2.addCell(cell);
 		     
