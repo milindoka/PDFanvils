@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -41,7 +39,7 @@ public class monthlyReportpdf {
 
 	void FillRollArray()
 	{   roll.removeAll(roll);
-	   
+	    APchain.removeAll(APchain);	   
 	String temp[],rolltemp[];
 	
 	
@@ -51,7 +49,8 @@ public class monthlyReportpdf {
 	rolltemp=temp[2].split(",");
 	
 	  for (int x=0;x<rolltemp.length;x++)
-	    { roll.add(rolltemp[x]); 	    	
+	    { roll.add(rolltemp[x]);
+	      APchain.add("");
 	    }
 	}
 
@@ -68,7 +67,32 @@ public class monthlyReportpdf {
 	    attendanceLines.add("31/11/19 - Sat - 11:53#IX-A#5,25,197,331,565,1012#APPPAP");
 	}
 	
-	
+	void Check_ThirtyOneDays_And_Fill_APChain()
+	{ boolean datefound=false;
+	  
+	  for(int i=1;i<32;i++)
+		{ 
+		  String TwoDigitMonthDay=String.format("%02d",i);
+		  datefound=false;
+		  for(int j=0;j<attendanceLines.size();j++)
+		  {
+			  String str=attendanceLines.get(j).substring(0, 2);
+			  if(str.equalsIgnoreCase(TwoDigitMonthDay))
+			  {datefound=true; break;}
+		  }
+		  for(int k=0;k<roll.size();k++)
+		  {
+			String temp=APchain.get(k);
+			if(datefound) 
+				APchain.set(k,temp+"P");
+			    else
+			    APchain.set(k,temp+" ");
+			   
+		   }
+		}
+	  for(int l=0;l<APchain.size();l++)
+		  System.out.println(APchain.get(l));
+	}
 	
 	
 	 void AttendanceReportPdf() throws DocumentException, IOException
@@ -87,6 +111,7 @@ public class monthlyReportpdf {
 	     //    com.itextpdf.text.Font NORMAL = new com.itextpdf.text.Font(FontFamily.TIMES_ROMAN, 12);
 	        AddHeader(document);
 	        FillRollArray();
+	        Check_ThirtyOneDays_And_Fill_APChain();
 	        AttendanceGrid(document);
          
 //	        AddFooter(document);
