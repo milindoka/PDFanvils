@@ -16,11 +16,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class monthlyReportpdf {
 	
-
+    int totalDays=0;
+    int PresentCount[];
 	ArrayList<String> roll=new ArrayList<String>();//creating new generic arraylist  
 	ArrayList<String> attendanceLines=new ArrayList<String>();//creating new generic arraylist
 	ArrayList<String> APchain=new ArrayList<String>();//creating new generic arraylist
-	
+	//ArrayList<Integer> PresentCount=new ArrayList<Integer>();//creating new generic arraylist
 	int strength=35,requiredtables=3;
 	
 	
@@ -39,19 +40,21 @@ public class monthlyReportpdf {
 
 	void FillRollArray()
 	{   roll.removeAll(roll);
-	    APchain.removeAll(APchain);	   
+	    APchain.removeAll(APchain);
+	  
 	String temp[],rolltemp[];
-	
-	
 	
 	//assert 4 parts in first split 
 	temp=attendanceLines.get(0).split("#");
 	rolltemp=temp[2].split(",");
 	
+	
 	  for (int x=0;x<rolltemp.length;x++)
 	    { roll.add(rolltemp[x]);
 	      APchain.add("");
 	    }
+
+	  PresentCount=new int[rolltemp.length];
 	}
 
 	
@@ -100,14 +103,18 @@ public class monthlyReportpdf {
 			String temp2=APchain.get(k);
 			
 			if(datefound) 
-				APchain.set(k,temp2+lastblock.charAt(k));
+				{ char ap=lastblock.charAt(k);
+				  if(ap=='P') PresentCount[k]++;
+				  APchain.set(k,temp2+ap);
+				
+				}
 			    else
 			    APchain.set(k,temp2+" ");
 			   
 		   }
 		}
-	  for(int l=0;l<APchain.size();l++)
-		  System.out.println(APchain.get(l));
+	  for(int l=0;l<roll.size();l++)
+		  System.out.println(PresentCount[l]);
 	}
 	
 	
