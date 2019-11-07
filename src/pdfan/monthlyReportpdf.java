@@ -19,10 +19,10 @@ public class monthlyReportpdf {
 	
     int totalDays=0;
     int PresentCount[];
+    String ClassDiv="";
 	ArrayList<String> roll=new ArrayList<String>();//creating new generic arraylist  
 	ArrayList<String> attendanceLines=new ArrayList<String>();//creating new generic arraylist
 	ArrayList<String> APchain=new ArrayList<String>();//creating new generic arraylist
-	//ArrayList<Integer> PresentCount=new ArrayList<Integer>();//creating new generic arraylist
 	int strength=35,requiredtables=3;
 	
 	
@@ -47,6 +47,7 @@ public class monthlyReportpdf {
 	
 	//assert 4 parts in first split 
 	temp=attendanceLines.get(0).split("#");
+	ClassDiv=new String(temp[1]);
 	rolltemp=temp[2].split(",");
 	
 	
@@ -56,6 +57,8 @@ public class monthlyReportpdf {
 	    }
 
 	  PresentCount=new int[rolltemp.length];
+	  
+	 
 	}
 
 	
@@ -116,8 +119,7 @@ public class monthlyReportpdf {
 			   
 		   }
 		}
-	  for(int l=0;l<roll.size();l++)
-		  System.out.println(PresentCount[l]);
+	 
 	}
 	
 	
@@ -138,9 +140,12 @@ public class monthlyReportpdf {
 	    	document.open();
 	    	
 	     //    com.itextpdf.text.Font NORMAL = new com.itextpdf.text.Font(FontFamily.TIMES_ROMAN, 12);
-	        AddHeader(document);
-	        FillRollArray();
+	        
+	    	FillRollArray();
 	        Check_ThirtyOneDays_And_Fill_APChain();
+	    	
+	    	AddHeader(document);
+	        
 	        AttendanceGrid(document);
          
 //	        AddFooter(document);
@@ -171,9 +176,9 @@ public class monthlyReportpdf {
    cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
   	table.addCell(cell);
 
-
-   cell = new PdfPCell(new Phrase("Class-Div :"));cell.setBorder(PdfPCell.NO_BORDER);
-   cell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+  	 System.out.println(ClassDiv);
+   cell = new PdfPCell(new Phrase("Class-Div : "+ ClassDiv));cell.setBorder(PdfPCell.NO_BORDER);
+   cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
   	table.addCell(cell);
   	
   	
@@ -187,6 +192,7 @@ public class monthlyReportpdf {
     
   	table.setSpacingAfter(10f);
     document.add(table);
+    
 		  
   }
 	  
@@ -268,11 +274,6 @@ public class monthlyReportpdf {
 			   double percent = PresentCount[i]*100/totalDays;
 			    String percentage = df.format(percent);
 			    
-			//    float percent = PresentCount[i]*100/totalDays;
-            //  String percentage = String.format("%03.2f",percent);
-			    
-                
-                
                 
 			    cell = new PdfPCell(new Phrase(percentage,normal));
 			    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -280,64 +281,8 @@ public class monthlyReportpdf {
 			    table2.addCell(cell);
 		     
 		  }
-
-	
-		  	
+		 
 		    document.add(table2);
-				  
-		  
-		  
-		  
-		  
-		  /*
-		  
-		  PdfPTable table1 = new PdfPTable(35);
-	      table1.setWidthPercentage(100);
-  		  PdfPCell cellfortable1 = new PdfPCell();
-  		  cellfortable1.setPadding(0);
-  		  table1.addCell(cellfortable1);
-  		  
-          for(int aw = 0; aw < 35*31; aw++){
-              table1.addCell("P");
-          }
-          
- 
-     	  document.add(table1);	
-*/
 	  }
-	  
-
-	 void FillTable(PdfPTable tbl)
-	 {
-		 PdfPCell cell = new PdfPCell(new Phrase(""));
-		  cell.setPaddingBottom(4f);
-		  int index = 0;
-//		  
-//	  	  cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-//	  	  tbl.addCell(cell);
-//	  	  cell = new PdfPCell(new Phrase("MRK"));
-////	  	  cell.setPaddingBottom(4f);
-//	  	  cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-//	  	  tbl.addCell(cell);
-	  	
-	  	for(int i=0;i<35;i++)
-	  	{ if(i+index*35>=strength) break;
-	  
-	  	  cell = new PdfPCell(new Phrase(roll.get(i+index*35)));
-	  	  cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-	      cell.setPaddingBottom(3f);
-	      cell.setPaddingTop(1f);
-		  tbl.addCell(cell);
-		  cell = new PdfPCell(new Phrase(attendanceLines.get(i+index*35)));
-		  cell.setPaddingBottom(3f);	
-		  cell.setPaddingTop(1f);
-		  cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-		  
-		  tbl.addCell(cell);
-	  		
-	  	}
-	  			 
-	 }
-	 
 
 }
