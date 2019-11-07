@@ -4,6 +4,7 @@ package pdfan;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -195,7 +196,7 @@ public class monthlyReportpdf {
 		   float col[]={4,8,2,2,2,2,2,2,2,2,2,2,
 				            2,2,2,2,2,2,2,2,2,2,
 				            2,2,2,2,2,2,2,2,2,2,
-				            2,4,4};
+				            2,4,5};
 		  	
 		  	//////////   TITLE ROW  ///////////////////////
 		  	
@@ -263,12 +264,18 @@ public class monthlyReportpdf {
 			    table2.addCell(cell);
 			    
 			    
-			    float percent = PresentCount[i]*100/totalDays;
-                String percentage = String.format(" %3.2f",percent);
+			   DecimalFormat df = new DecimalFormat("000.00");
+			   double percent = PresentCount[i]*100/totalDays;
+			    String percentage = df.format(percent);
 			    
+			//    float percent = PresentCount[i]*100/totalDays;
+            //  String percentage = String.format("%03.2f",percent);
 			    
+                
+                
+                
 			    cell = new PdfPCell(new Phrase(percentage,normal));
-			 //   cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+			    cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 			    //cell.setBorder(PdfPCell.NO_BORDER);
 			    table2.addCell(cell);
 		     
